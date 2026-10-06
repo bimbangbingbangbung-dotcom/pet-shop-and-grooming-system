@@ -1,0 +1,9 @@
+node_modules/
+
+# SQLite runtime database and its WAL companions. Rebuilt from `npm run seed`,
+# so there is nothing here worth versioning — and they churn on every request.
+petshop/data/
+
+*.log
+.DS_Store
+Thumbs.db

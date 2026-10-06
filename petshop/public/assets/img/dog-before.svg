@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" role="img" aria-label="A shaggy terrier before grooming: matted, muddy and fur over the eyes">
+  <rect width="500" height="400" fill="#F0F4F1"/>
+  <g stroke="#DDE7E0" stroke-width="2">
+    <path d="M0 100h500M0 200h500M0 300h500M100 0v400M200 0v400M300 0v400M400 0v400"/>
+  </g>
+  <ellipse cx="250" cy="356" rx="146" ry="20" fill="#0F1D18" opacity=".13"/>
+
+  <!-- shaggy body -->
+  <path d="M150 356q-4-116 100-116t100 116Z" fill="#C08F52" stroke="#0F1D18" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M150 356l14-30 10 26 16-34 10 30 18-36 12 32 18-38 12 34 18-36 12 32 16-30 10 26 14-28 10 24" fill="#C08F52" stroke="#0F1D18" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M212 356q-4-74 38-74t38 74Z" fill="#E8D3B0"/>
+
+  <!-- ears, with tufts breaking the outline -->
+  <path d="M176 150c-64 30-76 122-56 182 6 18 24 26 40 20 22-8 30-34 32-72 4-58-4-104-16-130Z" fill="#A87A45" stroke="#0F1D18" stroke-width="5"/>
+  <path d="M124 300l-16 34 34-16Zm22 22l-10 36 32-24Zm30 6l2 34 24-30Z" fill="#A87A45" stroke="#0F1D18" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M324 150c64 30 76 122 56 182-6 18-24 26-40 20-22-8-30-34-32-72-4-58 4-104 16-130Z" fill="#A87A45" stroke="#0F1D18" stroke-width="5"/>
+  <path d="M376 300l16 34-34-16Zm-22 22l10 36-32-24Zm-30 6l-2 34-24-30Z" fill="#A87A45" stroke="#0F1D18" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- fur ring -->
+  <path d="M250 80 296.7 67.3 288.3 87.6 336.3 93.7 320.7 109.3 362.7 133.3 342.4 141.7 372 180 342.4 218.3 362.7 226.7 320.7 250.7 336.3 266.3 288.3 272.4 296.7 292.7 250 302 203.3 292.7 211.7 272.4 163.7 266.3 179.3 250.7 137.3 226.7 157.6 218.3 128 180 157.6 141.7 137.3 133.3 179.3 109.3 163.7 93.7 211.7 87.6 203.3 67.3Z"
+        fill="#C08F52" stroke="#0F1D18" stroke-width="5" stroke-linejoin="round"/>
+  <ellipse cx="250" cy="182" rx="97" ry="93" fill="#C08F52"/>
+
+  <!-- eyes, then the fringe falling over them -->
+  <ellipse cx="214" cy="176" rx="11" ry="13" fill="#1A1310"/>
+  <ellipse cx="286" cy="176" rx="11" ry="13" fill="#1A1310"/>
+  <circle cx="218" cy="171" r="4" fill="#FFFFFF"/>
+  <circle cx="290" cy="171" r="4" fill="#FFFFFF"/>
+  <path d="M174 140q76-46 152 0-10 44-38 44-6-24-24-24-18 0-24 24-16 0-24-24-18 0-24 24-28 0-34-44Z" fill="#A87A45" stroke="#0F1D18" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- muzzle -->
+  <ellipse cx="250" cy="228" rx="58" ry="44" fill="#E8D3B0"/>
+  <path d="M234 212q16-14 32 0-5 18-16 18t-16-18Z" fill="#1A1310"/>
+  <path d="M250 230q-14 16-28 8m28-8q14 16 28 8" fill="none" stroke="#1A1310" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- mud and a leaf that came in from the park -->
+  <g fill="#7A5A33" opacity=".55">
+    <ellipse cx="192" cy="322" rx="26" ry="14" transform="rotate(-14 192 322)"/>
+    <ellipse cx="312" cy="336" rx="19" ry="11" transform="rotate(12 312 336)"/>
+    <ellipse cx="342" cy="290" rx="13" ry="8"/>
+  </g>
+  <path d="M150 120c22-14 46-6 50 14-22 14-46 6-50-14Z" fill="#4E8B5A" stroke="#0F1D18" stroke-width="4"/>
+  <path d="M150 120c16 4 32 9 44 14" fill="none" stroke="#0F1D18" stroke-width="3"/>
+</svg>

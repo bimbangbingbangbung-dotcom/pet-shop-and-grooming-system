@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a groom — Snip &amp; Snout, Bramley</title>
+<meta name="description" content="Choose a grooming service, tell us about your dog, and pick a live slot. Booked in about a minute, no phone tag.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Karla:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap site-head__bar">
+    <a class="brand" href="/">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+        <circle cx="7.5" cy="25" r="4.6"/><circle cx="24.5" cy="25" r="4.6"/>
+        <path d="M10.6 21.6 24.8 4.6"/><path d="M21.4 21.6 7.2 4.6"/>
+        <circle cx="16" cy="14.6" r="1.7" fill="currentColor" stroke="none"/>
+      </svg>
+      <span class="brand__name">Snip &amp; Snout<span class="brand__sub">Pet shop &amp; grooming parlour</span></span>
+    </a>
+    <nav class="nav" id="site-nav" data-nav aria-label="Main">
+      <a class="nav__link" href="/">Home</a>
+      <a class="nav__link" href="/services">Grooming</a>
+      <a class="nav__link" href="/shop">Shop</a>
+      <a class="nav__link" href="/booking">Book a groom</a>
+    </nav>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <a class="cart-btn" href="/cart">Basket <span class="cart-count" data-cart-count data-empty="true">0</span></a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <span>Book a groom</span>
+      </nav>
+      <h1>Book a groom</h1>
+      <p class="lede">Four short steps. Nothing to sign up for, and you can change your mind up to 24 hours before.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="booking">
+
+      <div>
+        <ol class="stepper" data-stepper>
+          <li class="stepper__item" data-step="1" aria-current="step"><span class="stepper__n">1</span> Service</li>
+          <li class="stepper__item" data-step="2"><span class="stepper__n">2</span> Your pet</li>
+          <li class="stepper__item" data-step="3"><span class="stepper__n">3</span> Time</li>
+          <li class="stepper__item" data-step="4"><span class="stepper__n">4</span> Your details</li>
+        </ol>
+
+        <div class="form-alert" data-alert data-visible="false" role="alert">
+          <span data-alert-text></span>
+        </div>
+
+        <!-- 1 --------------------------------------------------------- -->
+        <section class="panel" data-panel="1" data-active="true">
+          <div class="panel__head">
+            <h2>Pick a service</h2>
+            <p>Priced by size. You will choose the size on the next step.</p>
+          </div>
+          <div class="choice-stack" data-service-list aria-live="polite">
+            <div class="skeleton" style="height:96px"></div>
+            <div class="skeleton" style="height:96px"></div>
+            <div class="skeleton" style="height:96px"></div>
+          </div>
+          <div class="panel__actions">
+            <a class="linkish" href="/services">What each one includes</a>
+            <button class="btn" type="button" data-go="2">Next: your pet</button>
+          </div>
+        </section>
+
+        <!-- 2 --------------------------------------------------------- -->
+        <section class="panel" data-panel="2">
+          <div class="panel__head">
+            <h2>Tell us about your dog</h2>
+            <p>Two minutes now, and we will have it on file for next time.</p>
+          </div>
+
+          <form data-form="pet" novalidate>
+            <div class="form-grid">
+              <label class="field">
+                <span class="field__label">Their name</span>
+                <input class="input" type="text" name="petName" autocomplete="off" maxlength="40">
+                <span class="field__error"></span>
+              </label>
+              <label class="field">
+                <span class="field__label">What they are</span>
+                <input class="input" type="text" name="petType" placeholder="Dog, or the breed if you like" autocomplete="off" maxlength="30">
+                <span class="field__error"></span>
+              </label>
+              <label class="field">
+                <span class="field__label">Breed <span class="muted" style="font-weight:400">(if you know it)</span></span>
+                <input class="input" type="text" name="breed" autocomplete="off" maxlength="40">
+                <span class="field__error"></span>
+              </label>
+              <label class="field">
+                <span class="field__label">Coat type <span class="muted" style="font-weight:400">(optional)</span></span>
+                <input class="input" type="text" name="coat" placeholder="Wiry, curly, double coat…" autocomplete="off" maxlength="40">
+                <span class="field__error"></span>
+              </label>
+            </div>
+
+            <fieldset class="field" style="border:0;padding:0;margin-bottom:var(--sp-5)">
+              <legend class="field__label" style="padding:0">How big are they?</legend>
+              <div class="choice-stack choice-stack--2">
+                <label class="choice">
+                  <input type="radio" name="petSize" value="small">
+                  <span class="choice__body">
+                    <span class="choice__title">Small</span>
+                    <span class="choice__meta">Up to 10 kg — Terrier, Pug, Cockapoo</span>
+                  </span>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="petSize" value="medium">
+                  <span class="choice__body">
+                    <span class="choice__title">Medium</span>
+                    <span class="choice__meta">10 to 25 kg — Spaniel, Bulldog, Collie</span>
+                  </span>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="petSize" value="large">
+                  <span class="choice__body">
+                    <span class="choice__title">Large</span>
+                    <span class="choice__meta">Over 25 kg — Lab, Shepherd, Standard Poodle</span>
+                  </span>
+                </label>
+              </div>
+              <span class="field__error" data-size-error></span>
+            </fieldset>
+
+            <fieldset class="field" style="border:0;padding:0">
+              <legend class="field__label" style="padding:0">Anything to add?</legend>
+              <p class="field__hint">Each one goes on the same appointment.</p>
+              <div class="choice-stack choice-stack--2" data-addon-list aria-live="polite"></div>
+            </fieldset>
+          </form>
+
+          <div class="panel__actions">
+            <button class="btn btn--quiet" type="button" data-go="1">Back</button>
+            <button class="btn" type="button" data-go="3">Next: pick a time</button>
+          </div>
+        </section>
+
+        <!-- 3 --------------------------------------------------------- -->
+        <section class="panel" data-panel="3">
+          <div class="panel__head">
+            <h2>Pick a day and a time</h2>
+            <p>Two tables, so a slot can take two grooms. Times shown are when we start.</p>
+          </div>
+
+          <div class="day-nav">
+            <button class="btn btn--quiet" type="button" data-day="-1">Previous day</button>
+            <span class="day-nav__label" data-day-label></span>
+            <button class="btn btn--quiet" type="button" data-day="1">Next day</button>
+            <label class="sr-only" for="book-date">Jump to a date</label>
+            <input class="input" type="date" id="book-date" data-date style="width:auto">
+          </div>
+
+          <div class="slots" data-slots aria-live="polite" aria-busy="true"></div>
+
+          <div class="panel__actions">
+            <button class="btn btn--quiet" type="button" data-go="2">Back</button>
+            <button class="btn" type="button" data-go="4">Next: your details</button>
+          </div>
+        </section>
+
+        <!-- 4 --------------------------------------------------------- -->
+        <section class="panel" data-panel="4">
+          <div class="panel__head">
+            <h2>Where do we reach you?</h2>
+            <p>We text when they are ready, and email the confirmation.</p>
+          </div>
+
+          <form data-form="owner" novalidate>
+            <div class="form-grid">
+              <label class="field">
+                <span class="field__label">Your name</span>
+                <input class="input" type="text" name="ownerName" autocomplete="name" maxlength="60">
+                <span class="field__error"></span>
+              </label>
+              <label class="field">
+                <span class="field__label">Email</span>
+                <input class="input" type="email" name="email" autocomplete="email" maxlength="120">
+                <span class="field__error"></span>
+              </label>
+              <label class="field">
+                <span class="field__label">Phone</span>
+                <input class="input" type="tel" name="phone" autocomplete="tel" maxlength="24">
+                <span class="field__error"></span>
+              </label>
+            </div>
+            <label class="field">
+              <span class="field__label">Anything we should know? <span class="muted" style="font-weight:400">(optional)</span></span>
+              <span class="field__hint">Nervous, hates the dryer, sore hip, will only work for cheese.</span>
+              <textarea class="textarea" name="notes" maxlength="500"></textarea>
+              <span class="field__error"></span>
+            </label>
+          </form>
+
+          <div class="panel__actions">
+            <button class="btn btn--quiet" type="button" data-go="3">Back</button>
+            <button class="btn btn--accent" type="button" data-submit>Confirm booking</button>
+          </div>
+        </section>
+
+        <!-- done ------------------------------------------------------ -->
+        <section class="panel" data-panel="5">
+          <div class="success" data-success></div>
+        </section>
+      </div>
+
+      <aside class="summary-card" aria-labelledby="summary-heading">
+        <h2 id="summary-heading">Your booking</h2>
+        <div data-summary>
+          <p class="summary-empty">Choose a service and the rest fills itself in.</p>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p class="foot-brand__name">Snip &amp; Snout</p>
+        <p style="margin-top:.5rem">42 Well Lane<br>Bramley, Leeds BS4 2QN</p>
+        <p style="margin-top:.5rem"><a href="tel:+441174962210">0117 496 2210</a></p>
+      </div>
+      <div>
+        <h3>Grooming</h3>
+        <ul>
+          <li><a href="/services">The full menu</a></li>
+          <li><a href="/booking">Book a groom</a></li>
+          <li><a href="/services#faq">Grooming questions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Shop</h3>
+        <ul>
+          <li><a href="/shop?category=food">Food &amp; nutrition</a></li>
+          <li><a href="/shop?category=toys">Toys</a></li>
+          <li><a href="/shop?category=grooming">Grooming kit</a></li>
+          <li><a href="/cart">Your basket</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Small print</h3>
+        <ul>
+          <li>Delivery £3.95, free over £40</li>
+          <li>Collect in shop, ready in an hour</li>
+          <li><a href="/admin">Staff sign-in</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-note">
+      <span>© 2026 Snip &amp; Snout. A demonstration build.</span>
+      <span>Node · SQLite · no dependencies.</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/assets/js/booking.js"></script>
+</body>
+</html>

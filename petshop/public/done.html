@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confirmation — Snip &amp; Snout</title>
+<meta name="description" content="Your order or appointment with Snip &amp; Snout.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Karla:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap site-head__bar">
+    <a class="brand" href="/">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+        <circle cx="7.5" cy="25" r="4.6"/><circle cx="24.5" cy="25" r="4.6"/>
+        <path d="M10.6 21.6 24.8 4.6"/><path d="M21.4 21.6 7.2 4.6"/>
+        <circle cx="16" cy="14.6" r="1.7" fill="currentColor" stroke="none"/>
+      </svg>
+      <span class="brand__name">Snip &amp; Snout<span class="brand__sub">Pet shop &amp; grooming parlour</span></span>
+    </a>
+    <nav class="nav" id="site-nav" data-nav aria-label="Main">
+      <a class="nav__link" href="/">Home</a>
+      <a class="nav__link" href="/services">Grooming</a>
+      <a class="nav__link" href="/shop">Shop</a>
+      <a class="nav__link" href="/booking">Book a groom</a>
+    </nav>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <a class="cart-btn" href="/cart">Basket <span class="cart-count" data-cart-count data-empty="true">0</span></a>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap wrap--narrow" style="padding-block:clamp(3rem, 8vw, 5.5rem)">
+    <h1 class="confirm-head" data-page-title>Confirmation</h1>
+    <div data-slot aria-live="polite">
+      <div class="skeleton" style="height:64px;width:64px;border-radius:50%"></div>
+      <div class="skeleton" style="height:34px;width:60%;margin-top:1rem"></div>
+      <div class="skeleton" style="height:18px;width:85%;margin-top:1rem"></div>
+      <div class="skeleton" style="height:150px;margin-top:2rem"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p class="foot-brand__name">Snip &amp; Snout</p>
+        <p style="margin-top:.5rem">42 Well Lane<br>Bramley, Leeds BS4 2QN</p>
+        <p style="margin-top:.5rem"><a href="tel:+441174962210">0117 496 2210</a></p>
+      </div>
+      <div>
+        <h3>Grooming</h3>
+        <ul>
+          <li><a href="/services">The full menu</a></li>
+          <li><a href="/booking">Book a groom</a></li>
+          <li><a href="/services#faq">Grooming questions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Shop</h3>
+        <ul>
+          <li><a href="/shop?category=food">Food &amp; nutrition</a></li>
+          <li><a href="/shop?category=toys">Toys</a></li>
+          <li><a href="/shop?category=grooming">Grooming kit</a></li>
+          <li><a href="/cart">Your basket</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Small print</h3>
+        <ul>
+          <li>Delivery £3.95, free over £40</li>
+          <li>Collect in shop, ready in an hour</li>
+          <li><a href="/admin">Staff sign-in</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-note">
+      <span>© 2026 Snip &amp; Snout. A demonstration build.</span>
+      <span>Node · SQLite · no dependencies.</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/assets/js/done.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" role="img" aria-label="The same terrier after a full groom: clipped short, clean, with a coral bandana">
+  <rect width="500" height="400" fill="#F0F4F1"/>
+  <g stroke="#DDE7E0" stroke-width="2">
+    <path d="M0 100h500M0 200h500M0 300h500M100 0v400M200 0v400M300 0v400M400 0v400"/>
+  </g>
+  <ellipse cx="250" cy="356" rx="146" ry="20" fill="#0F1D18" opacity=".13"/>
+
+  <!-- smooth body -->
+  <path d="M150 356q0-116 100-116t100 116Z" fill="#D9A15B" stroke="#0F1D18" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M208 356q0-76 42-76t42 76Z" fill="#F0DFC4"/>
+
+  <!-- neat ears -->
+  <path d="M178 152c-56 26-70 116-52 176 6 20 26 28 44 20 20-10 26-40 26-84 2-56 0-96-18-112Z" fill="#C4863F" stroke="#0F1D18" stroke-width="5"/>
+  <path d="M322 152c56 26 70 116 52 176-6 20-26 28-44 20-20-10-26-40-26-84-2-56 0-96 18-112Z" fill="#C4863F" stroke="#0F1D18" stroke-width="5"/>
+
+  <!-- head -->
+  <ellipse cx="250" cy="182" rx="104" ry="98" fill="#D9A15B" stroke="#0F1D18" stroke-width="5"/>
+
+  <!-- eyes -->
+  <ellipse cx="214" cy="172" rx="11" ry="13" fill="#1A1310"/>
+  <ellipse cx="286" cy="172" rx="11" ry="13" fill="#1A1310"/>
+  <circle cx="218" cy="167" r="4" fill="#FFFFFF"/>
+  <circle cx="290" cy="167" r="4" fill="#FFFFFF"/>
+
+  <!-- muzzle -->
+  <ellipse cx="250" cy="226" rx="58" ry="44" fill="#F0DFC4"/>
+  <path d="M234 210q16-14 32 0-5 18-16 18t-16-18Z" fill="#1A1310"/>
+  <path d="M250 228q-14 16-28 8m28-8q14 16 28 8" fill="none" stroke="#1A1310" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- bandana -->
+  <path d="M186 268q64 36 128 0l-16 54q-48 26-96 0Z" fill="#E2542C" stroke="#0F1D18" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M232 322l-10 40 34-40 34 40-10-40" fill="#C9451F" stroke="#0F1D18" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M210 282q40 20 80 0" fill="none" stroke="#F0DFC4" stroke-width="5" stroke-linecap="round"/>
+</svg>

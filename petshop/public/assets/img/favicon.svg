@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Snip and Snout">
+  <rect width="64" height="64" rx="12" fill="#0D6B57"/>
+  <g fill="none" stroke="#E9EFEA" stroke-width="5" stroke-linecap="round">
+    <circle cx="20" cy="47" r="9"/><circle cx="44" cy="47" r="9"/>
+    <path d="M26 41 47 14"/><path d="M38 41 17 14"/>
+  </g>
+  <circle cx="32" cy="30" r="4" fill="#E2542C"/>
+</svg>

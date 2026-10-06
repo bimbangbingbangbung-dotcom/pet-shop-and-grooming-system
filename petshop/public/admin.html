@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staff console — Snip &amp; Snout</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Karla:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ------------------------------------------------------------ sign in -->
+<div data-login hidden>
+  <div class="login-card">
+    <p class="eyebrow--inline">Snip &amp; Snout</p>
+    <h1 style="font-size:var(--step-3);margin-top:.35rem">Staff sign-in</h1>
+    <p class="muted" style="margin-top:.5rem">Front desk and the grooming team.</p>
+
+    <form data-form="login" novalidate style="margin-top:1.75rem">
+      <div class="form-alert" data-alert data-visible="false" role="alert">
+        <span data-alert-text></span>
+      </div>
+      <label class="field">
+        <span class="field__label">Email</span>
+        <input class="input" type="email" name="email" autocomplete="username" maxlength="120">
+        <span class="field__error"></span>
+      </label>
+      <label class="field">
+        <span class="field__label">Password</span>
+        <input class="input" type="password" name="password" autocomplete="current-password" maxlength="200">
+        <span class="field__error"></span>
+      </label>
+      <button class="btn btn--block" type="submit">Sign in</button>
+    </form>
+
+    <p class="ship-note" style="margin-top:1.25rem">Demonstration build: <span class="tnum">admin@snipandsnout.co.uk</span> / <span class="tnum">groom1234</span></p>
+    <p style="margin-top:1rem"><a class="linkish" href="/">Back to the shop</a></p>
+  </div>
+</div>
+
+<!-- ------------------------------------------------------------ console -->
+<div class="adm" data-console hidden>
+
+  <div class="adm-rail">
+    <a class="brand" href="/">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+        <circle cx="7.5" cy="25" r="4.6"/><circle cx="24.5" cy="25" r="4.6"/>
+        <path d="M10.6 21.6 24.8 4.6"/><path d="M21.4 21.6 7.2 4.6"/>
+        <circle cx="16" cy="14.6" r="1.7" fill="currentColor" stroke="none"/>
+      </svg>
+      <span class="brand__name">Snip &amp; Snout<span class="brand__sub">Staff console</span></span>
+    </a>
+
+    <nav class="adm-nav" aria-label="Sections">
+      <button type="button" data-view="today" aria-current="true">Today</button>
+      <button type="button" data-view="bookings">Bookings</button>
+      <button type="button" data-view="orders">Orders</button>
+      <button type="button" data-view="stock">Stock</button>
+    </nav>
+
+    <div class="adm-rail__foot">
+      <p data-who></p>
+      <p style="margin-top:.6rem"><button type="button" class="linkish" data-signout style="color:#fff;border-bottom-color:rgba(255,255,255,.4)">Sign out</button></p>
+      <p style="margin-top:.6rem"><a href="/">View the shop</a></p>
+    </div>
+  </div>
+
+  <main class="adm-main" id="main">
+    <div class="adm-head">
+      <h1 data-title>Today</h1>
+      <div class="row">
+        <button class="btn btn--quiet" type="button" data-refresh>Refresh</button>
+      </div>
+    </div>
+
+    <!-- today ------------------------------------------------------- -->
+    <section class="adm-view" data-view-panel="today" data-active="true">
+      <div class="stat-grid" data-stats>
+        <div class="stat"><p class="stat__label">Grooms today</p><p class="stat__value">—</p></div>
+        <div class="stat"><p class="stat__label">Still to come</p><p class="stat__value">—</p></div>
+        <div class="stat"><p class="stat__label">Orders to send</p><p class="stat__value">—</p></div>
+        <div class="stat stat--accent"><p class="stat__label">Taken so far</p><p class="stat__value">—</p></div>
+      </div>
+
+      <div class="adm-toolbar">
+        <h2 style="font-size:var(--step-2)">On the table today</h2>
+      </div>
+      <div class="table-scroll" data-today-bookings></div>
+
+      <div class="adm-toolbar" style="margin-top:var(--sp-6)">
+        <h2 style="font-size:var(--step-2)">Running low</h2>
+        <a class="linkish" href="#" data-goto="stock">All stock</a>
+      </div>
+      <div class="table-scroll" data-low-stock></div>
+    </section>
+
+    <!-- bookings ---------------------------------------------------- -->
+    <section class="adm-view" data-view-panel="bookings">
+      <div class="adm-toolbar">
+        <div>
+          <label class="sr-only" for="bk-status">Filter by status</label>
+          <select class="select" id="bk-status" data-bk-status>
+            <option value="">Every status</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="arrived">Arrived</option>
+            <option value="complete">Complete</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <label class="sr-only" for="bk-from">From date</label>
+          <input class="input" type="date" id="bk-from" data-bk-from>
+        </div>
+        <p class="muted" data-bk-count></p>
+      </div>
+      <div class="table-scroll" data-bookings></div>
+    </section>
+
+    <!-- orders ------------------------------------------------------ -->
+    <section class="adm-view" data-view-panel="orders">
+      <div class="adm-toolbar">
+        <p class="muted">Newest first. Cancelling puts the stock back.</p>
+        <p class="muted" data-order-count></p>
+      </div>
+      <div class="table-scroll" data-orders></div>
+    </section>
+
+    <!-- stock ------------------------------------------------------- -->
+    <section class="adm-view" data-view-panel="stock">
+      <div class="adm-toolbar">
+        <p class="muted">Change a number and tab away — it saves on its own.</p>
+        <p class="muted" data-stock-count></p>
+      </div>
+      <div class="table-scroll" data-stock-table></div>
+    </section>
+  </main>
+</div>
+
+<script type="module" src="/assets/js/admin.js"></script>
+</body>
+</html>
