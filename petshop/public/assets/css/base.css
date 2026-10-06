@@ -261,8 +261,8 @@ main { flex: 1 0 auto; }
 .btn--quiet {
   --btn-bg: transparent; --btn-fg: var(--ink); --btn-bd: var(--line-strong);
   border-width: 1px;
-  padding-block: 0.5rem;
-  min-height: 38px;
+  padding-block: 0.65rem;
+  min-height: 44px;
   font-weight: 600;
   font-size: var(--step--1);
 }
@@ -335,6 +335,9 @@ main { flex: 1 0 auto; }
 .nav { display: flex; align-items: center; gap: 0.35rem; }
 
 .nav__link {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   padding: 0.5rem 0.7rem;
   border-radius: var(--r-sm);
   font-weight: 600;
@@ -354,6 +357,7 @@ main { flex: 1 0 auto; }
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
+  min-height: 44px;
   padding: 0.5rem 0.85rem;
   border: 1px solid var(--line-strong);
   border-radius: var(--r-sm);
@@ -390,7 +394,14 @@ main { flex: 1 0 auto; }
   margin-top: auto;
 }
 
-.site-foot a { color: var(--on-dark); text-decoration: none; }
+.site-foot a {
+  color: var(--on-dark);
+  text-decoration: none;
+  /* Inline links do not grow from padding alone — the box model has to be a
+     real box before the 44px target rule can be measured on it. */
+  display: inline-block;
+  padding-block: 4px;
+}
 .site-foot a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .foot-grid {

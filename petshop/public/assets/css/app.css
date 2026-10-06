@@ -27,7 +27,7 @@
   color: var(--muted);
   margin-bottom: var(--sp-3);
 }
-.crumbs a { color: var(--muted); }
+.crumbs a { color: var(--muted); padding-block: 3px; }
 .crumbs a:hover { color: var(--ink); }
 
 /* -------------------------------------------------------------- hero ---- */
@@ -301,8 +301,10 @@
 
 .filter-chip {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  min-height: 44px;
   width: 100%;
   text-align: left;
   padding: 0.5rem 0.7rem;
@@ -401,7 +403,7 @@
 
 .prod__price { font-family: var(--font-display); font-size: var(--step-2); font-weight: 700; font-variant-numeric: tabular-nums; }
 
-.prod__add { min-height: 38px; padding: 0.45rem 0.9rem; font-size: 0.88rem; }
+.prod__add { min-height: 44px; padding: 0.55rem 0.9rem; font-size: 0.88rem; }
 
 .prod--sold .prod__media { background: repeating-linear-gradient(135deg, var(--suds) 0 10px, var(--porcelain-deep) 10px 20px); }
 
@@ -477,6 +479,10 @@
 .quote-grid { display: grid; gap: var(--sp-6); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .quote-grid figcaption { margin-top: var(--sp-3); font-size: 0.9rem; color: var(--muted); }
 .quote-grid figcaption strong { color: var(--ink); display: block; }
+/* On a dark band those two rules outrank the inherited light colour, exactly
+   as they do in reverse on .band -- so restate it for the dark case. */
+.band .quote-grid figcaption { color: var(--on-dark-muted); }
+.band .quote-grid figcaption strong { color: #fff; }
 
 /* -------------------------------------------------------- hours/visit --- */
 
@@ -730,11 +736,11 @@
 .cart-line__end { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
 
 .qty { display: inline-flex; border: 1px solid var(--line-strong); border-radius: var(--r-sm); background: var(--paper); }
-.qty button { width: 38px; height: 38px; font-size: 1.1rem; font-weight: 700; }
+.qty button { width: 44px; height: 44px; font-size: 1.1rem; font-weight: 700; }
 .qty button:hover { background: var(--suds); }
 .qty input {
   width: 46px;
-  height: 38px;
+  height: 44px;
   border: 0;
   border-inline: 1px solid var(--line-strong);
   text-align: center;
