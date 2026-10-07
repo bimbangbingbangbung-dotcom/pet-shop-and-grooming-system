@@ -1,15 +1,13 @@
 /**
- * Basket. Quantities live in localStorage and update the page instantly;
- * the server re-prices every line and holds the stock, so nothing here is
- * trusted — it is all display until "Place order".
+ * Basket. Quantities, per-line notes and the delivery choice live in
+ * browser storage and update the page instantly; the server re-prices every
+ * line and holds the stock, so nothing here is trusted — it is all display
+ * until checkout actually posts the order.
  */
 
-import { api, ApiError } from './api.js';
-import { cart } from './cart.js';
-import {
-  hydrateChrome, esc, money, announce,
-  showFieldError, clearFieldErrors, paintApiError, clearBanner, withBusy,
-} from './ui.js';
+import { api } from './api.js';
+import { cart, checkout } from './cart.js';
+import { hydrateChrome, esc, money, announce } from './ui.js';
 import { productArt, tintFor } from './art.js';
 
 hydrateChrome();
@@ -20,16 +18,10 @@ const linesEl = document.querySelector('[data-lines]');
 const totalsEl = document.querySelector('[data-totals]');
 const meter = document.querySelector('[data-ship-meter] span');
 const shipNote = document.querySelector('[data-ship-note]');
-const form = document.querySelector('[data-form="checkout"]');
-const alertBox = document.querySelector('[data-alert]');
-const addressField = document.querySelector('[data-address-field]');
-const placeBtn = document.querySelector('[data-place]');
+const orderNote = document.querySelector('[data-order-note]');
 
-/** Forms expose their own `name` property, so named access needs asking twice. */
-const field = (n) => form.querySelector(`[name="${n}"]`);
-
-let shop = { shipping_cents: 395, free_over_cents: 4000 };
-let fulfilment = 'delivery';
+let shop = { shipping_cents: 15000, free_over_cents: 250000 };
+let fulfilment = checkout.read().fulfilment === 'collection' ? 'collection' : 'delivery';
 
 /* --------------------------------------------------------------- render -- */
 
@@ -41,7 +33,13 @@ function renderLine(l) {
       <div>
         <p class="cart-line__name"><a href="/product?slug=${encodeURIComponent(l.slug)}">${esc(l.name)}</a></p>
         <p class="cart-line__meta">${money(l.price_cents)} each${l.size ? ` · ${esc(l.size)}` : ''}</p>
-        <p style="margin-top:.4rem">
+        <label class="field" style="margin-top:.6rem;max-width:34ch">
+          <span class="sr-only">Note for ${esc(l.name)}</span>
+          <input class="input" type="text" data-note maxlength="120"
+                 placeholder="Add a note for this item"
+                 value="${esc(l.note || '')}" style="min-height:40px;font-size:.88rem">
+        </label>
+        <p>
           <button class="cart-remove" type="button" data-remove="${esc(l.slug)}">
             Remove<span class="sr-only"> ${esc(l.name)}</span>
           </button>
@@ -136,99 +134,36 @@ linesEl.addEventListener('change', (event) => {
   render();
 });
 
+/**
+ * Notes save as they are typed but never re-render: the input keeps focus,
+ * and a note is display-only until the server reads it back.
+ */
+linesEl.addEventListener('input', (event) => {
+  if (!event.target.matches('[data-note]')) return;
+  cart.setNote(event.target.closest('[data-slug]').dataset.slug, event.target.value);
+});
+
 document.querySelectorAll('[name="fulfilment"]').forEach((input) => {
+  if (input.value === fulfilment) input.checked = true;
   input.addEventListener('change', () => {
     fulfilment = input.value;
-    addressField.hidden = fulfilment === 'collection';
-    clearBanner(alertBox);
+    checkout.write({ fulfilment });
     renderTotals();
   });
 });
 
+orderNote.value = checkout.read().notes || '';
+orderNote.addEventListener('input', () => checkout.write({ notes: orderNote.value }));
+
 window.addEventListener('cart:change', render);
-
-/* --------------------------------------------------------------- submit --- */
-
-function validate() {
-  clearFieldErrors(form);
-  let ok = true;
-
-  if (field('name').value.trim().length < 2) {
-    showFieldError(form, 'name', 'Your name needs at least 2 characters.');
-    ok = false;
-  }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(field('email').value.trim())) {
-    showFieldError(form, 'email', 'Enter an email we can send the receipt to.');
-    ok = false;
-  }
-  if (field('phone').value.trim() && !/^[0-9+()\s-]{7,24}$/.test(field('phone').value.trim())) {
-    showFieldError(form, 'phone', 'That phone number does not look right.');
-    ok = false;
-  }
-  if (fulfilment === 'delivery' && field('address').value.trim().length < 8) {
-    showFieldError(form, 'address', 'We need a full address to deliver to.');
-    ok = false;
-  }
-
-  if (!ok) {
-    alertBox.dataset.visible = 'true';
-    alertBox.querySelector('[data-alert-text]').textContent = 'Check the highlighted fields.';
-    alertBox.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    form.querySelector('[data-invalid="true"] input')?.focus();
-  }
-  return ok;
-}
-
-async function placeOrder() {
-  clearBanner(alertBox);
-  if (!cart.lines().length) return;
-  if (!validate()) return;
-
-  const payload = {
-    items: cart.lines().map((l) => ({ slug: l.slug, qty: l.qty })),
-    name: field('name').value.trim(),
-    email: field('email').value.trim(),
-    phone: field('phone').value.trim(),
-    address: field('address').value.trim(),
-    fulfilment,
-  };
-
-  try {
-    const result = await withBusy(placeBtn, 'Placing order…', () => api.post('/api/orders', payload));
-    cart.clear();
-    announce(`Order ${result.order.ref} placed.`);
-    location.href = `/done?kind=order&ref=${encodeURIComponent(result.order.ref)}`;
-  } catch (err) {
-    paintApiError(form, alertBox, err);
-
-    // A line that changed stock: point at the basket line that caused it.
-    if (err instanceof ApiError) {
-      const slugs = new Set(cart.lines().map((l) => l.slug));
-      const bad = err.details.find((d) => slugs.has(d.field));
-      if (bad) {
-        const node = linesEl.querySelector(`[data-slug="${CSS.escape(bad.field)}"]`);
-        if (node) {
-          linesEl.querySelector('[data-problem="true"]')?.removeAttribute('data-problem');
-          node.setAttribute('data-problem', 'true');
-          node.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        }
-      }
-    }
-  }
-}
-
-placeBtn.addEventListener('click', placeOrder);
 
 /* ----------------------------------------------------------------- boot -- */
 
-async function boot() {
+(async function boot() {
   try {
     shop = await api.get('/api/shop');
   } catch (_) {
     /* the defaults above are the same numbers; carry on */
   }
   render();
-}
-
-addressField.hidden = false;
-boot();
+})();

@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en-PH">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Product — Snip &amp; Snout</title>
-<meta name="description" content="Product details, care notes and delivery from Snip &amp; Snout in Bramley.">
+<meta name="description" content="Product details, care notes and delivery from Snip &amp; Snout in Quezon City.">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,6 +30,7 @@
       <a class="nav__link" href="/services">Grooming</a>
       <a class="nav__link" href="/shop">Shop</a>
       <a class="nav__link" href="/booking">Book a groom</a>
+      <a class="nav__link" href="/account" data-account-link>Sign in</a>
     </nav>
     <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">Menu</button>
     <a class="cart-btn" href="/cart">Basket <span class="cart-count" data-cart-count data-empty="true">0</span></a>
@@ -49,7 +50,7 @@
     <div class="pdp" data-pdp aria-live="polite" aria-busy="true">
       <div class="skeleton" style="aspect-ratio:1"></div>
       <div>
-        <div class="skeleton" style="height:34px;width:70%"></div>
+        <h1 class="pdp__title"><span class="skeleton" style="display:block;height:34px;width:70%"></span></h1>
         <div class="skeleton" style="height:30px;width:35%;margin-top:1rem"></div>
         <div class="skeleton" style="height:16px;width:90%;margin-top:1.5rem"></div>
         <div class="skeleton" style="height:16px;width:80%;margin-top:.5rem"></div>
@@ -57,12 +58,38 @@
       </div>
     </div>
 
-    <section class="section--tight" data-related-section hidden>
+    <section class="section--tight" data-related-section>
       <div class="section-head">
         <h2>From the same shelf</h2>
         <a class="linkish" href="/shop">Back to the shop</a>
       </div>
-      <div class="prod-grid" data-related></div>
+      <div class="prod-grid" data-related>
+          <article class="prod" aria-hidden="true">
+          <div class="prod__media"><div class="skeleton" style="width:74%;height:74%"></div></div>
+          <div class="prod__body">
+          <div class="skeleton" style="height:24px;width:78%"></div>
+          <div class="skeleton" style="height:19px;width:34%"></div>
+          <div class="skeleton" style="height:21px;width:96%"></div>
+          <div class="skeleton" style="height:21px;width:62%"></div>
+          <div class="prod__foot">
+          <div class="skeleton" style="height:26px;width:64px"></div>
+          <div class="skeleton" style="height:44px;width:76px"></div>
+          </div>
+          </div>
+          </article><article class="prod" aria-hidden="true">
+          <div class="prod__media"><div class="skeleton" style="width:74%;height:74%"></div></div>
+          <div class="prod__body">
+          <div class="skeleton" style="height:24px;width:78%"></div>
+          <div class="skeleton" style="height:19px;width:34%"></div>
+          <div class="skeleton" style="height:21px;width:96%"></div>
+          <div class="skeleton" style="height:21px;width:62%"></div>
+          <div class="prod__foot">
+          <div class="skeleton" style="height:26px;width:64px"></div>
+          <div class="skeleton" style="height:44px;width:76px"></div>
+          </div>
+          </div>
+          </article>
+        </div>
     </section>
   </div>
 </main>
@@ -72,8 +99,8 @@
     <div class="foot-grid">
       <div>
         <p class="foot-brand__name">Snip &amp; Snout</p>
-        <p style="margin-top:.5rem">42 Well Lane<br>Bramley, Leeds BS4 2QN</p>
-        <p style="margin-top:.5rem"><a href="tel:+441174962210">0117 496 2210</a></p>
+        <p style="margin-top:.5rem">128 Maginhawa Street<br>Teachers Village East, Diliman, Quezon City 1101</p>
+        <p style="margin-top:.5rem"><a href="tel:+639175550142">0917 555 0142</a></p>
       </div>
       <div>
         <h3>Grooming</h3>
@@ -95,7 +122,7 @@
       <div>
         <h3>Small print</h3>
         <ul>
-          <li>Delivery £3.95, free over £40</li>
+          <li>Delivery ₱150, free over ₱2,500</li>
           <li>Collect in shop, ready in an hour</li>
           <li><a href="/admin">Staff sign-in</a></li>
         </ul>

@@ -127,9 +127,23 @@ function sameOrigin(req, url) {
 
 const etagCache = new Map();
 
+/** Short paths that are really one page seen from another angle. */
+const ALIASES = {
+  '/register': '/login?tab=register',
+  '/signin': '/login',
+  '/sign-in': '/login',
+};
+
 function staticFile(req, res, url) {
   let pathname = decodeURIComponent(url.pathname);
   if (pathname.endsWith('/')) pathname += 'index.html';
+
+  const alias = ALIASES[pathname];
+  if (alias) {
+    res.writeHead(302, { Location: alias, 'Cache-Control': 'no-store' });
+    res.end();
+    return;
+  }
 
   const filePath = path.join(PUBLIC_DIR, path.normalize(pathname));
   if (!filePath.startsWith(PUBLIC_DIR)) {
@@ -160,8 +174,14 @@ function serve(res, req, filePath, stat, ext) {
   const etag = `"${stat.mtimeMs.toString(36)}-${stat.size.toString(36)}"`;
   etagCache.set(filePath, etag);
 
-  const isHtml = ext === '.html';
-  const cacheControl = isHtml ? 'no-cache' : 'public, max-age=300';
+  // Anything textual the page fetches has to agree with the HTML that
+  // references it: a 5-minute TTL on JS while the HTML revalidates is exactly
+  // how a page ends up importing a module from a previous deploy. Revalidate
+  // every time instead — the ETag below turns that into a 304. Images and
+  // fonts are inert, so they can sit in the cache for a day.
+  const cacheControl = ['.html', '.js', '.css', '.json'].includes(ext)
+    ? 'no-cache'
+    : 'public, max-age=86400';
 
   if (req.headers['if-none-match'] === etag) {
     res.writeHead(304, { ETag: etag, 'Cache-Control': cacheControl });
@@ -287,7 +307,9 @@ server.listen(PORT, HOST, () => {
   console.log(`  http://${HOST}:${PORT}`);
   console.log('');
   console.log(`  Admin: http://${HOST}:${PORT}/admin  ` +
-    `(admin@snipandsnout.co.uk / ${process.env.ADMIN_PASSWORD || 'groom1234'})`);
+    `(${process.env.ADMIN_EMAIL || 'admin@snipandsnout.ph'} / ${process.env.ADMIN_PASSWORD || 'groom1234'})`);
+  console.log(`  Customer demo: http://${HOST}:${PORT}/login  ` +
+    `(maria@example.com / shop1234)`);
   console.log(boot.seeded ? '  Database: created and seeded.' : '  Database: ready.');
   console.log('');
 });

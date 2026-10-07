@@ -7,9 +7,13 @@ import { cart } from './cart.js';
 
 /* ------------------------------------------------------------ format ---- */
 
-const gbp = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' });
+const PHP = new Intl.NumberFormat('en-PH', {
+  style: 'currency', currency: 'PHP',
+  minimumFractionDigits: 2, maximumFractionDigits: 2,
+});
 
-export const money = (cents) => gbp.format((Number(cents) || 0) / 100);
+/** Values are integer centavos: ₱1,590 is stored as 159000. */
+export const money = (cents) => PHP.format((Number(cents) || 0) / 100);
 
 export function esc(value) {
   return String(value ?? '')
@@ -23,7 +27,7 @@ export function esc(value) {
 export function dateLong(iso) {
   const [y, m, d] = String(iso).split('-').map(Number);
   if (!y || !m || !d) return iso;
-  return new Intl.DateTimeFormat('en-GB', {
+  return new Intl.DateTimeFormat('en-PH', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
   }).format(new Date(y, m - 1, d));
 }
@@ -31,8 +35,24 @@ export function dateLong(iso) {
 export function dateShort(iso) {
   const [y, m, d] = String(iso).split('-').map(Number);
   if (!y || !m || !d) return iso;
-  return new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })
+  return new Intl.DateTimeFormat('en-PH', { weekday: 'short', day: 'numeric', month: 'short' })
     .format(new Date(y, m - 1, d));
+}
+
+/**
+ * Stamp a database timestamp for a human.
+ *
+ * SQLite's `datetime('now')` is UTC with no zone marker, while the payment
+ * ledger writes real ISO-8601 (`…Z`). Accept both, then show the same instant
+ * in local Philippine time so nothing on the site reads as machine output.
+ */
+export function stamp(value, dateStyle = 'medium') {
+  const raw = String(value ?? '');
+  if (!raw) return '';
+  const iso = /(?:Z|[+-]\d{2}:?\d{2})$/.test(raw) ? raw : `${raw.replace(' ', 'T')}Z`;
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return esc(raw);
+  return esc(new Intl.DateTimeFormat('en-PH', { dateStyle, timeStyle: 'short' }).format(date));
 }
 
 export function isoToday() {
@@ -171,6 +191,100 @@ export function clearBanner(banner) {
   banner.dataset.visible = 'false';
 }
 
+/* ------------------------------------------------------------- account -- */
+
+let accountPromise = null;
+
+/**
+ * One session probe per page load, shared by everyone who asks. A signed-out
+ * visitor gets a normal 200 with `customer: null`, so the probe never logs an
+ * error on a page that has nothing to do with accounts.
+ */
+export function account() {
+  if (!accountPromise) {
+    accountPromise = fetch('/api/auth/me', { credentials: 'same-origin' })
+      .then((res) => (res.ok ? res.json() : { customer: null }))
+      .catch(() => ({ customer: null }));
+  }
+  return accountPromise;
+}
+
+export function setAccount(customer) {
+  accountPromise = Promise.resolve({ customer, authenticated: !!customer });
+  paintAccount(customer);
+}
+
+function paintAccount(customer) {
+  document.querySelectorAll('[data-account-link]').forEach((link) => {
+    link.dataset.signedIn = String(!!customer);
+    if (customer) {
+      link.textContent = customer.name.split(' ')[0] || 'Account';
+      link.setAttribute('aria-label', `Your account, signed in as ${customer.name}`);
+    } else {
+      link.textContent = 'Sign in';
+      link.removeAttribute('aria-label');
+    }
+  });
+}
+
+export async function signOut() {
+  try {
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' });
+  } catch (_) {
+    /* already signed out as far as the browser is concerned */
+  }
+  setAccount(null);
+}
+
+/** Send a signed-out visitor to the sign-in page and remember where they were. */
+export async function requireAccount() {
+  const { customer } = await account();
+  if (customer) return customer;
+  const next = location.pathname + location.search;
+  location.replace(`/login?next=${encodeURIComponent(next === '/login' ? '/' : next)}`);
+  return null;
+}
+
+/* ---------------------------------------------------------- status track */
+
+const cap = (s) => String(s || '').charAt(0).toUpperCase() + String(s || '').slice(1);
+
+/**
+ * One bar per stage of an order or appointment, filled as far as it has got.
+ */
+export function statusTrack(current, steps, labels = {}) {
+  const labelFor = (step) => labels[step] || cap(step);
+
+  // A cancelled record never reads as "part-way through": the other stages
+  // would only invite someone to ask where their parcel is.
+  if (current === 'cancelled') {
+    return `<ol class="track">
+      <li class="track__step" data-state="cancelled">
+        <span class="track__bar"></span>
+        <span class="track__label">Cancelled</span>
+      </li>
+    </ol>`;
+  }
+
+  const at = steps.indexOf(current);
+  const reached = at === -1 ? 0 : at;
+  return `<ol class="track">${steps.map((step, i) => `
+    <li class="track__step" data-state="${i < reached ? 'done' : i === reached ? 'current' : 'todo'}">
+      <span class="track__bar"></span>
+      <span class="track__label">${esc(labelFor(step))}</span>
+    </li>`).join('')}</ol>`;
+}
+
+/** Badge text and tone for a status, shared by the console and the account. */
+export function statusBadge(status) {
+  const tone = {
+    complete: 'ok', shipped: 'ok', paid: 'ok', arrived: 'live',
+    picking: 'low', confirmed: 'low', pending: 'low',
+    cancelled: 'out', refunded: 'out',
+  }[status] || '';
+  return `<span class="badge${tone ? ` badge--${tone}` : ''}">${esc(cap(status))}</span>`;
+}
+
 /* ------------------------------------------------------------- chrome ---- */
 
 function hydrateNav() {
@@ -203,6 +317,7 @@ export function refreshCartBadge() {
 export function hydrateChrome() {
   hydrateNav();
   refreshCartBadge();
+  account().then(({ customer }) => paintAccount(customer));
   window.addEventListener('cart:change', refreshCartBadge);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {

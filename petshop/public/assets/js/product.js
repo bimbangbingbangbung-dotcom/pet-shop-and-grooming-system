@@ -19,6 +19,7 @@ const crumb = document.querySelector('[data-crumb-name]');
 const slug = new URLSearchParams(location.search).get('slug');
 
 function notFound(message) {
+  hideRelated();
   pdp.removeAttribute('aria-busy');
   pdp.style.display = 'block';
   pdp.innerHTML = `<div class="state">
@@ -68,7 +69,7 @@ function render(p) {
         <a class="btn btn--ghost" href="/shop">Back to the shop</a>
       </div>
 
-      <p class="ship-note">Delivery £3.95, free over £40. Ordered before 2pm it goes out the same day, or collect in shop within the hour.</p>
+      <p class="ship-note">Delivery ₱150, free over ₱2,500. Ordered before 2pm it goes out the same day, or collect in shop within the hour.</p>
     </div>`;
 
   announce(`${p.name}, ${money(p.price_cents)}.`);
@@ -99,8 +100,18 @@ function render(p) {
   }
 }
 
+/**
+ * The related shelf ships with its placeholder already in the page, so the
+ * first paint reserves the space. It is only ever taken back out when there is
+ * genuinely nothing to show.
+ */
+function hideRelated() {
+  relatedSlot.innerHTML = '';
+  relatedSection.hidden = true;
+}
+
 function renderRelated(items) {
-  if (!items.length) return;
+  if (!items.length) return hideRelated();
   relatedSlot.innerHTML = items.map(renderProductCard).join('');
   relatedSection.hidden = false;
 }
@@ -120,6 +131,7 @@ async function load() {
     }
     pdp.style.display = 'block';
     pdp.innerHTML = state.error(err.message, 'product');
+    hideRelated();
     wireRetry(pdp, load);
   }
 }

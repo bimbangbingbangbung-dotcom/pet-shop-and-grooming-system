@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en-PH">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,7 +39,7 @@
       <button class="btn btn--block" type="submit">Sign in</button>
     </form>
 
-    <p class="ship-note" style="margin-top:1.25rem">Demonstration build: <span class="tnum">admin@snipandsnout.co.uk</span> / <span class="tnum">groom1234</span></p>
+    <p class="ship-note" style="margin-top:1.25rem">Demonstration build: <span class="tnum">admin@snipandsnout.ph</span> / <span class="tnum">groom1234</span></p>
     <p style="margin-top:1rem"><a class="linkish" href="/">Back to the shop</a></p>
   </div>
 </div>
@@ -61,7 +61,9 @@
       <button type="button" data-view="today" aria-current="true">Today</button>
       <button type="button" data-view="bookings">Bookings</button>
       <button type="button" data-view="orders">Orders</button>
-      <button type="button" data-view="stock">Stock</button>
+      <button type="button" data-view="products">Products</button>
+      <button type="button" data-view="transactions">Transactions</button>
+      <button type="button" data-view="report">Sales report</button>
     </nav>
 
     <div class="adm-rail__foot">
@@ -95,7 +97,7 @@
 
       <div class="adm-toolbar" style="margin-top:var(--sp-6)">
         <h2 style="font-size:var(--step-2)">Running low</h2>
-        <a class="linkish" href="#" data-goto="stock">All stock</a>
+        <a class="linkish" href="#" data-goto="products">All stock</a>
       </div>
       <div class="table-scroll" data-low-stock></div>
     </section>
@@ -123,21 +125,229 @@
     <!-- orders ------------------------------------------------------ -->
     <section class="adm-view" data-view-panel="orders">
       <div class="adm-toolbar">
-        <p class="muted">Newest first. Cancelling puts the stock back.</p>
+        <div>
+          <label class="sr-only" for="or-status">Filter by status</label>
+          <select class="select" id="or-status" data-or-status>
+            <option value="">Every status</option>
+            <option value="paid">Confirmed</option>
+            <option value="picking">Packing</option>
+            <option value="shipped">Shipped / ready</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <p class="muted">Newest first. Cancelling puts the stock back and refunds the payment.</p>
         <p class="muted" data-order-count></p>
       </div>
       <div class="table-scroll" data-orders></div>
     </section>
 
-    <!-- stock ------------------------------------------------------- -->
-    <section class="adm-view" data-view-panel="stock">
+    <!-- products ---------------------------------------------------- -->
+    <section class="adm-view" data-view-panel="products">
       <div class="adm-toolbar">
-        <p class="muted">Change a number and tab away — it saves on its own.</p>
+        <div class="row">
+          <button class="btn" type="button" data-product-new>Add a product</button>
+          <label class="sr-only" for="pd-cat">Filter by category</label>
+          <select class="select" id="pd-cat" data-pd-cat><option value="">Every category</option></select>
+        </div>
         <p class="muted" data-stock-count></p>
       </div>
       <div class="table-scroll" data-stock-table></div>
     </section>
+
+    <!-- transactions ------------------------------------------------ -->
+    <section class="adm-view" data-view-panel="transactions">
+      <div class="adm-toolbar">
+        <div class="row">
+          <label class="sr-only" for="tx-kind">Type</label>
+          <select class="select" id="tx-kind" data-tx-kind>
+            <option value="">Shop and grooming</option>
+            <option value="order">Shop orders only</option>
+            <option value="booking">Grooming only</option>
+          </select>
+          <label class="sr-only" for="tx-status">Payment status</label>
+          <select class="select" id="tx-status" data-tx-status>
+            <option value="">Any payment status</option>
+            <option value="paid">Paid</option>
+            <option value="pending">Pending</option>
+            <option value="refunded">Refunded</option>
+            <option value="void">Void</option>
+          </select>
+          <label class="sr-only" for="tx-from">From</label>
+          <input class="input" type="date" id="tx-from" data-tx-from>
+          <label class="sr-only" for="tx-to">To</label>
+          <input class="input" type="date" id="tx-to" data-tx-to>
+        </div>
+        <p class="muted" data-tx-count></p>
+      </div>
+
+      <div class="stat-grid" data-tx-totals>
+        <div class="stat"><p class="stat__label">Paid</p><p class="stat__value">—</p></div>
+        <div class="stat"><p class="stat__label">Pending</p><p class="stat__value">—</p></div>
+        <div class="stat"><p class="stat__label">Refunded</p><p class="stat__value">—</p></div>
+        <div class="stat stat--accent"><p class="stat__label">Shop / grooming</p><p class="stat__value">—</p></div>
+      </div>
+
+      <div class="table-scroll" data-transactions></div>
+    </section>
+
+    <!-- sales report ------------------------------------------------ -->
+    <section class="adm-view" data-view-panel="report">
+      <div class="adm-toolbar">
+        <div class="row">
+          <label class="sr-only" for="rp-from">From</label>
+          <input class="input" type="date" id="rp-from" data-rp-from>
+          <label class="sr-only" for="rp-to">To</label>
+          <input class="input" type="date" id="rp-to" data-rp-to>
+          <div class="tabs">
+            <button type="button" data-range="7">7 days</button>
+            <button type="button" data-range="30">30 days</button>
+            <button type="button" data-range="90">90 days</button>
+          </div>
+        </div>
+        <p class="muted" data-rp-range></p>
+      </div>
+
+      <div class="stat-grid" data-rp-totals>
+        <div class="stat stat--accent"><p class="stat__label">Total taken</p><p class="stat__value">—</p></div>
+        <div class="stat"><p class="stat__label">Shop</p><p class="stat__value">—</p></div>
+        <div class="stat"><p class="stat__label">Grooming</p><p class="stat__value">—</p></div>
+        <div class="stat"><p class="stat__label">Transactions</p><p class="stat__value">—</p></div>
+        <div class="stat"><p class="stat__label">Average sale</p><p class="stat__value">—</p></div>
+        <div class="stat"><p class="stat__label">Units sold</p><p class="stat__value">—</p></div>
+      </div>
+
+      <div class="card" style="margin-bottom:var(--sp-5)">
+        <div class="adm-toolbar">
+          <h2 style="font-size:var(--step-2)">Takings by day</h2>
+          <p class="muted" data-rp-peak></p>
+        </div>
+        <div data-rp-chart aria-label="Daily takings chart" role="img"></div>
+      </div>
+
+      <div class="card-grid">
+        <div class="card">
+          <h2 style="font-size:var(--step-2)">Best sellers</h2>
+          <div class="table-scroll" style="border:0" data-rp-products></div>
+        </div>
+        <div class="card">
+          <h2 style="font-size:var(--step-2)">Grooming services</h2>
+          <div class="table-scroll" style="border:0" data-rp-services></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:var(--sp-5)">
+        <h2 style="font-size:var(--step-2)">Where the money came from</h2>
+        <div class="grid-2" style="margin-top:var(--sp-4)">
+          <div>
+            <p class="stat__label">By category</p>
+            <div class="table-scroll" style="border:0;margin-top:.5rem" data-rp-categories></div>
+          </div>
+          <div>
+            <p class="stat__label">By payment method</p>
+            <div class="table-scroll" style="border:0;margin-top:.5rem" data-rp-methods></div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+</div>
+
+<!-- ------------------------------------------------------- product sheet -->
+<div class="sheet" data-sheet hidden>
+  <div class="sheet__card" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <div class="sheet__head">
+      <div>
+        <h2 id="sheet-title" data-sheet-title>Add a product</h2>
+        <p data-sheet-sub>It appears in the shop as soon as you save.</p>
+      </div>
+      <button class="icon-btn" type="button" data-sheet-close aria-label="Close">✕</button>
+    </div>
+
+    <form data-form="product" novalidate>
+      <div class="form-alert" data-alert data-visible="false" role="alert">
+        <span data-alert-text></span>
+      </div>
+
+      <div class="form-grid">
+        <label class="field">
+          <span class="field__label">Name</span>
+          <input class="input" type="text" name="name" maxlength="80" required>
+          <span class="field__error"></span>
+        </label>
+        <label class="field">
+          <span class="field__label">URL slug</span>
+          <span class="field__hint">Left blank, it is made from the name.</span>
+          <input class="input" type="text" name="slug" maxlength="60" pattern="[a-z0-9-]+">
+          <span class="field__error"></span>
+        </label>
+        <label class="field">
+          <span class="field__label">Category</span>
+          <select class="select" name="category" data-sheet-categories></select>
+          <span class="field__error"></span>
+        </label>
+        <label class="field">
+          <span class="field__label">Price (₱)</span>
+          <input class="input" type="number" name="price" min="0" step="0.01" inputmode="decimal" required>
+          <span class="field__error"></span>
+        </label>
+        <label class="field">
+          <span class="field__label">Stock</span>
+          <input class="input" type="number" name="stock" min="0" step="1" required>
+          <span class="field__error"></span>
+        </label>
+        <label class="field">
+          <span class="field__label">Size shown to customers</span>
+          <input class="input" type="text" name="size" maxlength="30" placeholder="2 kg">
+          <span class="field__error"></span>
+        </label>
+        <label class="field">
+          <span class="field__label">Artwork</span>
+          <select class="select" name="art" data-sheet-art>
+            <option value="bag">Bag</option><option value="tin">Tin</option>
+            <option value="bottle">Bottle</option><option value="treat">Treat</option>
+            <option value="toy">Toy</option><option value="rope">Rope</option>
+            <option value="ball">Ball</option><option value="brush">Brush</option>
+            <option value="collar">Collar</option><option value="lead">Lead</option>
+            <option value="bed">Bed</option><option value="blanket">Blanket</option>
+          </select>
+          <span class="field__error"></span>
+        </label>
+        <label class="choice" style="align-self:end">
+          <input type="checkbox" name="featured">
+          <span class="choice__body">
+            <span class="choice__title">Feature on the home page</span>
+            <span class="choice__meta">Shows in the top shelf of the shop.</span>
+          </span>
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="field__label">Short description</span>
+        <span class="field__hint">One line, under 140 characters.</span>
+        <input class="input" type="text" name="blurb" maxlength="140">
+        <span class="field__error"></span>
+      </label>
+
+      <label class="field">
+        <span class="field__label">Description</span>
+        <textarea class="textarea" name="description" maxlength="600"></textarea>
+        <span class="field__error"></span>
+      </label>
+
+      <label class="field">
+        <span class="field__label">Care notes</span>
+        <textarea class="textarea" name="detail" maxlength="600"></textarea>
+        <span class="field__error"></span>
+      </label>
+
+      <div class="sheet__actions">
+        <button class="btn" type="submit" data-sheet-save>Save product</button>
+        <button class="btn btn--ghost" type="button" data-sheet-close>Cancel</button>
+        <span style="flex:1"></span>
+        <button class="btn btn--quiet" type="button" data-sheet-delete hidden>Delete</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <script type="module" src="/assets/js/admin.js"></script>

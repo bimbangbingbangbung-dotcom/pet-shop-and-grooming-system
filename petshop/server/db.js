@@ -143,7 +143,71 @@ class Db {
       expires_at INTEGER NOT NULL,
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
+
+    CREATE TABLE IF NOT EXISTS customers (
+      id         INTEGER PRIMARY KEY AUTOINCREMENT,
+      email      TEXT NOT NULL UNIQUE,
+      pass_hash  TEXT NOT NULL,
+      pass_salt  TEXT NOT NULL,
+      name       TEXT NOT NULL,
+      phone      TEXT NOT NULL DEFAULT '',
+      address    TEXT NOT NULL DEFAULT '',
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    -- Separate table and separate cookie from the admin session table, so
+    -- signing in as a customer can never satisfy an admin check or the
+    -- other way round.
+    CREATE TABLE IF NOT EXISTS customer_sessions (
+      token_hash  TEXT PRIMARY KEY,
+      customer_id INTEGER NOT NULL REFERENCES customers(id),
+      expires_at  INTEGER NOT NULL,
+      created_at  TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    -- One ledger for every peso that moves, shop and grooming alike. Bookings
+    -- start pending (revenue expected at the desk) and flip to paid when
+    -- the appointment is completed; orders are paid at checkout.
+    CREATE TABLE IF NOT EXISTS payments (
+      id           INTEGER PRIMARY KEY AUTOINCREMENT,
+      ref          TEXT NOT NULL UNIQUE,        -- receipt number, RCP-XXXXXX
+      kind         TEXT NOT NULL,               -- order | booking
+      order_id     INTEGER REFERENCES orders(id),
+      booking_id   INTEGER REFERENCES bookings(id),
+      customer_id  INTEGER REFERENCES customers(id),
+      amount_cents INTEGER NOT NULL,
+      method       TEXT NOT NULL DEFAULT 'card', -- card | gcash | maya | cod | cash
+      detail       TEXT NOT NULL DEFAULT '',     -- last 4 / wallet number / —
+      reference    TEXT NOT NULL DEFAULT '',     -- simulated gateway reference
+      status       TEXT NOT NULL DEFAULT 'pending', -- pending | paid | refunded | void
+      created_at   TEXT NOT NULL DEFAULT (datetime('now')),
+      paid_at      TEXT
+    );
+    CREATE INDEX IF NOT EXISTS payments_when ON payments(created_at);
+    CREATE INDEX IF NOT EXISTS payments_status ON payments(status, kind);
     `);
+
+    this.migrate();
+  }
+
+  /**
+   * Columns added after a database already existed. `CREATE TABLE IF NOT
+   * EXISTS` cannot add them, and the demo data is cheaper to keep than to
+   * assume every install is fresh.
+   */
+  migrate() {
+    const columns = (table) => new Set(
+      this.all(`PRAGMA table_info(${table})`).map((c) => c.name));
+
+    const add = (table, name, definition) => {
+      if (!columns(table).has(name)) this.run(`ALTER TABLE ${table} ADD COLUMN ${name} ${definition}`);
+    };
+
+    add('orders', 'customer_id', 'INTEGER REFERENCES customers(id)');
+    add('orders', 'notes', "TEXT NOT NULL DEFAULT ''");
+    add('orders', 'payment_ref', "TEXT NOT NULL DEFAULT ''");
+    add('bookings', 'customer_id', 'INTEGER REFERENCES customers(id)');
+    add('bookings', 'payment_ref', "TEXT NOT NULL DEFAULT ''");
   }
 
   run(sql, ...args) {

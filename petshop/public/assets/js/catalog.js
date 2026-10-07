@@ -98,15 +98,28 @@ export function renderMenu(services, options) {
 
 /* ------------------------------------------------------------- helpers -- */
 
+/**
+ * Skeletons use the same wrapper classes as the real cards and rows, so the
+ * first paint reserves roughly the space the content will take. A skeleton
+ * that is shorter than what replaces it moves the footer down when the
+ * response lands, and that is layout shift you can measure.
+ */
 export function skeletonGrid(n = 4) {
   let out = '';
   for (let i = 0; i < n; i++) {
-    out += `<div class="prod" aria-hidden="true">
-      <div class="skeleton" style="aspect-ratio:1"></div>
-      <div class="skeleton" style="height:18px;width:70%;margin-top:.75rem"></div>
-      <div class="skeleton" style="height:14px;width:90%;margin-top:.5rem"></div>
-      <div class="skeleton" style="height:32px;width:60%;margin-top:.9rem"></div>
-    </div>`;
+    out += `<article class="prod" aria-hidden="true">
+      <div class="prod__media"><div class="skeleton" style="width:74%;height:74%"></div></div>
+      <div class="prod__body">
+        <div class="skeleton" style="height:24px;width:78%"></div>
+        <div class="skeleton" style="height:19px;width:34%"></div>
+        <div class="skeleton" style="height:21px;width:96%"></div>
+        <div class="skeleton" style="height:21px;width:62%"></div>
+        <div class="prod__foot">
+          <div class="skeleton" style="height:26px;width:64px"></div>
+          <div class="skeleton" style="height:44px;width:76px"></div>
+        </div>
+      </div>
+    </article>`;
   }
   return out;
 }
@@ -116,14 +129,19 @@ export function skeletonMenu(n = 3) {
   for (let i = 0; i < n; i++) {
     out += `<div class="menu__row" aria-hidden="true">
       <div>
-        <div class="skeleton" style="height:26px;width:45%"></div>
-        <div class="skeleton" style="height:15px;width:85%;margin-top:.7rem"></div>
-        <div class="skeleton" style="height:15px;width:65%;margin-top:.45rem"></div>
+        <div class="skeleton" style="height:34px;width:54%"></div>
+        <div class="skeleton" style="height:44px;width:86%;margin-top:.5rem"></div>
+        <div class="skeleton" style="height:34px;width:72%;margin-top:.75rem"></div>
+        <div class="skeleton" style="height:40px;width:78%;margin-top:.75rem"></div>
       </div>
       <div class="menu__prices">
-        <div class="skeleton" style="height:34px;width:58px"></div>
-        <div class="skeleton" style="height:34px;width:58px"></div>
-        <div class="skeleton" style="height:34px;width:58px"></div>
+        <div class="skeleton" style="height:46px;width:62px"></div>
+        <div class="skeleton" style="height:46px;width:62px"></div>
+        <div class="skeleton" style="height:46px;width:62px"></div>
+      </div>
+      <div class="menu__actions">
+        <div class="skeleton" style="height:24px;width:62px"></div>
+        <div class="skeleton" style="height:44px;width:164px"></div>
       </div>
     </div>`;
   }

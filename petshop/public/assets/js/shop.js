@@ -100,7 +100,7 @@ async function loadCounts() {
 
 async function load() {
   grid.setAttribute('aria-busy', 'true');
-  grid.innerHTML = skeletonGrid(8);
+  grid.innerHTML = skeletonGrid(12); // one page of placeholders, per: 12
   pager.hidden = true;
 
   try {

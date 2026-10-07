@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en-PH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout — Snip &amp; Snout</title>
+<meta name="description" content="Confirm your details, choose how to pay, and place your Snip &amp; Snout order.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Karla:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap site-head__bar">
+    <a class="brand" href="/">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+        <circle cx="7.5" cy="25" r="4.6"/><circle cx="24.5" cy="25" r="4.6"/>
+        <path d="M10.6 21.6 24.8 4.6"/><path d="M21.4 21.6 7.2 4.6"/>
+        <circle cx="16" cy="14.6" r="1.7" fill="currentColor" stroke="none"/>
+      </svg>
+      <span class="brand__name">Snip &amp; Snout<span class="brand__sub">Pet shop &amp; grooming parlour</span></span>
+    </a>
+    <nav class="nav" id="site-nav" data-nav aria-label="Main">
+      <a class="nav__link" href="/">Home</a>
+      <a class="nav__link" href="/services">Grooming</a>
+      <a class="nav__link" href="/shop">Shop</a>
+      <a class="nav__link" href="/booking">Book a groom</a>
+      <a class="nav__link" href="/account" data-account-link>Sign in</a>
+    </nav>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <a class="cart-btn" href="/cart">Basket <span class="cart-count" data-cart-count data-empty="true">0</span></a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/cart">Basket</a>
+        <span aria-hidden="true">/</span>
+        <span>Checkout</span>
+      </nav>
+      <h1>Checkout</h1>
+      <p class="lede" data-lede>Two short steps: where it goes, then how you are paying.</p>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding-bottom:clamp(3rem, 8vw, 5.5rem)">
+    <div class="cart" data-checkout-layout hidden>
+
+      <!-- ------------------------------------------------------ details -->
+      <div>
+        <form data-form="checkout" novalidate>
+          <div class="form-alert" data-alert data-visible="false" role="alert">
+            <span data-alert-text></span>
+          </div>
+
+          <h2 style="font-size:var(--step-2)">1. Where it goes</h2>
+
+          <div class="fulfil-toggle" style="margin-top:var(--sp-4)">
+            <label class="choice">
+              <input type="radio" name="fulfilment" value="delivery" checked>
+              <span class="choice__body">
+                <span class="choice__title">Delivery</span>
+                <span class="choice__meta" data-ship-copy>Out for ₱150, free over ₱2,500.</span>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="fulfilment" value="collection">
+              <span class="choice__body">
+                <span class="choice__title">Collect in shop</span>
+                <span class="choice__meta">Free. Ready within the hour during opening times.</span>
+              </span>
+            </label>
+          </div>
+
+          <div class="form-grid">
+            <label class="field">
+              <span class="field__label">Your name</span>
+              <input class="input" type="text" name="name" autocomplete="name" maxlength="60" required>
+              <span class="field__error"></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Email</span>
+              <span class="field__hint">The receipt and the tracking go here.</span>
+              <input class="input" type="email" name="email" autocomplete="email" maxlength="120" required>
+              <span class="field__error"></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Mobile number <span class="muted" style="font-weight:400">(optional)</span></span>
+              <span class="field__hint">Only if the rider cannot find you.</span>
+              <input class="input" type="tel" name="phone" autocomplete="tel" maxlength="24">
+              <span class="field__error"></span>
+            </label>
+            <label class="field" data-address-field>
+              <span class="field__label">Delivery address</span>
+              <input class="input" type="text" name="address" autocomplete="street-address" maxlength="240">
+              <span class="field__error"></span>
+            </label>
+          </div>
+
+          <label class="field">
+            <span class="field__label">Note with this order</span>
+            <span class="field__hint">Gift message, delivery instructions, a door code.</span>
+            <textarea class="textarea" name="notes" maxlength="500" data-order-note></textarea>
+            <span class="field__error"></span>
+          </label>
+
+          <hr style="margin-block:var(--sp-6)">
+
+          <h2 style="font-size:var(--step-2)">2. How you are paying</h2>
+
+          <div class="pay-grid">
+            <label class="choice">
+              <input type="radio" name="payment_method" value="card" checked>
+              <span class="choice__body">
+                <span class="choice__title">Credit or debit card</span>
+                <span class="choice__meta">Visa, Mastercard, JCB. Simulated here — nothing is charged.</span>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="payment_method" value="gcash">
+              <span class="choice__body">
+                <span class="choice__title">GCash</span>
+                <span class="choice__meta">Pay with your GCash wallet.</span>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="payment_method" value="maya">
+              <span class="choice__body">
+                <span class="choice__title">Maya</span>
+                <span class="choice__meta">Pay with your Maya wallet.</span>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="payment_method" value="cod">
+              <span class="choice__body">
+                <span class="choice__title">Cash on delivery</span>
+                <span class="choice__meta">Pay the rider, or at the desk when you collect.</span>
+              </span>
+            </label>
+          </div>
+
+          <div class="pay-fields" data-pay-fields>
+            <div data-pay-detail>
+              <label class="field">
+                <span class="field__label" data-detail-label>Card number</span>
+                <span class="field__hint" data-detail-hint>Any 12–19 digits will do — this is a demonstration build.</span>
+                <input class="input tnum" type="text" name="paymentDetail" inputmode="numeric"
+                       autocomplete="cc-number" maxlength="23" placeholder="4242 4242 4242 4242">
+                <span class="field__error"></span>
+              </label>
+            </div>
+
+            <div data-pay-card>
+              <label class="field">
+                <span class="field__label">Name on card</span>
+                <input class="input" type="text" name="cardName" autocomplete="cc-name" maxlength="60">
+                <span class="field__error"></span>
+              </label>
+              <div class="card-row">
+                <label class="field">
+                  <span class="field__label">Expiry</span>
+                  <input class="input tnum" type="text" name="cardExpiry" autocomplete="cc-exp"
+                         maxlength="5" placeholder="09/29">
+                  <span class="field__error"></span>
+                </label>
+                <label class="field">
+                  <span class="field__label">CVC</span>
+                  <input class="input tnum" type="text" name="cardCvv" autocomplete="cc-csc"
+                         maxlength="4" placeholder="123">
+                  <span class="field__error"></span>
+                </label>
+              </div>
+            </div>
+
+            <div data-pay-cod hidden>
+              <p class="pay-note">
+                Nothing is taken now. The rider collects payment on arrival, or you settle up at the
+                desk if you are collecting from the shop.
+              </p>
+            </div>
+          </div>
+
+          <p class="pay-note" style="margin-top:var(--sp-5)">
+            This is a demonstration build: card and wallet details are validated for shape, then
+            thrown away. No payment gateway is contacted and no money moves.
+          </p>
+        </form>
+      </div>
+
+      <!-- ------------------------------------------------------ summary -->
+      <aside class="summary-card" aria-labelledby="totals-heading">
+        <h2 id="totals-heading">Your order</h2>
+        <div data-lines></div>
+        <div data-totals style="margin-top:var(--sp-4)"></div>
+        <div class="ship-meter" data-ship-meter aria-hidden="true"><span style="width:0"></span></div>
+        <p class="ship-note" data-ship-note></p>
+        <p style="margin-top:var(--sp-4)">
+          <button class="btn btn--block" type="button" data-place>Place order</button>
+        </p>
+        <p class="ship-note">
+          By placing the order you agree to our returns policy.
+          <a class="linkish" href="/cart">Back to the basket</a>
+        </p>
+      </aside>
+
+    </div>
+
+    <div class="section" data-empty hidden>
+      <div class="state">
+        <p class="state__title">Nothing to check out</p>
+        <p class="state__body">The basket is empty, so there is nothing to pay for yet.</p>
+        <a class="btn" href="/shop">Go to the shop</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p class="foot-brand__name">Snip &amp; Snout</p>
+        <p style="margin-top:.5rem">128 Maginhawa Street<br>Teachers Village East, Diliman, Quezon City 1101</p>
+        <p style="margin-top:.5rem"><a href="tel:+639175550142">0917 555 0142</a></p>
+      </div>
+      <div>
+        <h3>Grooming</h3>
+        <ul>
+          <li><a href="/services">The full menu</a></li>
+          <li><a href="/booking">Book a groom</a></li>
+          <li><a href="/services#faq">Grooming questions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Shop</h3>
+        <ul>
+          <li><a href="/shop?category=food">Food &amp; nutrition</a></li>
+          <li><a href="/shop?category=toys">Toys</a></li>
+          <li><a href="/shop?category=grooming">Grooming kit</a></li>
+          <li><a href="/cart">Your basket</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Small print</h3>
+        <ul>
+          <li>Delivery ₱150, free over ₱2,500</li>
+          <li>Collect in shop, ready in an hour</li>
+          <li><a href="/admin">Staff sign-in</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-note">
+      <span>© 2026 Snip &amp; Snout. A demonstration build.</span>
+      <span>Node · SQLite · no dependencies.</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/assets/js/checkout.js"></script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en-PH">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Your basket — Snip &amp; Snout</title>
-<meta name="description" content="Review your basket, choose delivery or collection, and place the order.">
+<meta name="description" content="Review your basket, add any notes, and choose delivery or collection.">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,6 +30,7 @@
       <a class="nav__link" href="/services">Grooming</a>
       <a class="nav__link" href="/shop">Shop</a>
       <a class="nav__link" href="/booking">Book a groom</a>
+      <a class="nav__link" href="/account" data-account-link>Sign in</a>
     </nav>
     <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">Menu</button>
     <a class="cart-btn" href="/cart">Basket <span class="cart-count" data-cart-count data-empty="true">0</span></a>
@@ -45,11 +46,11 @@
         <span>Basket</span>
       </nav>
       <h1>Your basket</h1>
-      <p class="lede" data-lede>Check it over, choose delivery or collection, and it is done.</p>
+      <p class="lede" data-lede>Check it over, add a note to anything that needs one, then choose delivery or collection.</p>
     </div>
   </section>
 
-  <div class="wrap">
+  <div class="wrap" style="padding-bottom:clamp(3rem, 8vw, 5.5rem)">
     <div class="cart" data-cart-layout hidden>
 
       <div>
@@ -62,7 +63,7 @@
               <input type="radio" name="fulfilment" value="delivery" checked>
               <span class="choice__body">
                 <span class="choice__title">Delivery</span>
-                <span class="choice__meta">Out for £3.95, free over £40. Ordered before 2pm, same day.</span>
+                <span class="choice__meta">Out for ₱150, free over ₱2,500. Ordered before 2pm, same day.</span>
               </span>
             </label>
             <label class="choice">
@@ -75,37 +76,14 @@
           </div>
         </div>
 
-        <form data-form="checkout" novalidate style="margin-top:var(--sp-5)">
-          <div class="form-alert" data-alert data-visible="false" role="alert">
-            <span data-alert-text></span>
-          </div>
-
-          <div class="form-grid">
-            <label class="field">
-              <span class="field__label">Your name</span>
-              <span class="field__hint">The name on the door.</span>
-              <input class="input" type="text" name="name" autocomplete="name" maxlength="60">
-              <span class="field__error"></span>
-            </label>
-            <label class="field">
-              <span class="field__label">Email</span>
-              <span class="field__hint">The receipt goes here.</span>
-              <input class="input" type="email" name="email" autocomplete="email" maxlength="120">
-              <span class="field__error"></span>
-            </label>
-            <label class="field">
-              <span class="field__label">Phone <span class="muted" style="font-weight:400">(optional)</span></span>
-              <span class="field__hint">Only if the driver cannot find you.</span>
-              <input class="input" type="tel" name="phone" autocomplete="tel" maxlength="24">
-              <span class="field__error"></span>
-            </label>
-            <label class="field" data-address-field>
-              <span class="field__label">Delivery address</span>
-              <input class="input" type="text" name="address" autocomplete="street-address" maxlength="240">
-              <span class="field__error"></span>
-            </label>
-          </div>
-        </form>
+        <div style="margin-top:var(--sp-5)">
+          <h2 style="font-size:var(--step-2)">Anything we should know?</h2>
+          <label class="field" style="margin-top:var(--sp-4)">
+            <span class="field__label">Note with this order</span>
+            <span class="field__hint">Gift message, delivery instructions, a door code — whatever the driver needs.</span>
+            <textarea class="textarea" name="order-note" maxlength="500" data-order-note></textarea>
+          </label>
+        </div>
       </div>
 
       <aside class="summary-card" aria-labelledby="totals-heading">
@@ -114,9 +92,9 @@
         <div class="ship-meter" data-ship-meter aria-hidden="true"><span style="width:0"></span></div>
         <p class="ship-note" data-ship-note></p>
         <p style="margin-top:var(--sp-4)">
-          <button class="btn btn--block" type="button" data-place>Place order</button>
+          <a class="btn btn--block" href="/checkout" data-checkout>Continue to checkout</a>
         </p>
-        <p class="ship-note">Pay at the desk, or by card when you collect.</p>
+        <p class="ship-note">Next: your details and payment. Nothing is charged on this page.</p>
       </aside>
 
     </div>
@@ -136,8 +114,8 @@
     <div class="foot-grid">
       <div>
         <p class="foot-brand__name">Snip &amp; Snout</p>
-        <p style="margin-top:.5rem">42 Well Lane<br>Bramley, Leeds BS4 2QN</p>
-        <p style="margin-top:.5rem"><a href="tel:+441174962210">0117 496 2210</a></p>
+        <p style="margin-top:.5rem">128 Maginhawa Street<br>Teachers Village East, Diliman, Quezon City 1101</p>
+        <p style="margin-top:.5rem"><a href="tel:+639175550142">0917 555 0142</a></p>
       </div>
       <div>
         <h3>Grooming</h3>
@@ -159,7 +137,7 @@
       <div>
         <h3>Small print</h3>
         <ul>
-          <li>Delivery £3.95, free over £40</li>
+          <li>Delivery ₱150, free over ₱2,500</li>
           <li>Collect in shop, ready in an hour</li>
           <li><a href="/admin">Staff sign-in</a></li>
         </ul>

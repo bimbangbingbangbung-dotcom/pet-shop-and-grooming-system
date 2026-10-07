@@ -56,12 +56,63 @@ export const cart = {
     write(lines);
   },
 
+  /**
+   * Per-line customisation: gift wrap, a message, "leave at the gate".
+   * Deliberately silent — a note is typed rather than toggled, and
+   * re-rendering the basket on every keystroke would steal the focus
+   * mid-word.
+   */
+  setNote(slug, note) {
+    const lines = read();
+    const found = lines.find((l) => l.slug === slug);
+    if (!found) return;
+    found.note = String(note).slice(0, 120);
+    try {
+      localStorage.setItem(KEY, JSON.stringify(lines));
+    } catch (_) {
+      /* private mode: the note stays on screen but not on disk */
+    }
+  },
+
   remove(slug) {
     write(read().filter((l) => l.slug !== slug));
   },
 
   clear() {
     write([]);
+  },
+};
+
+/**
+ * Checkout choices that outlive the basket page but not the session:
+ * delivery vs collection, and how the customer is paying.
+ */
+const CHECKOUT_KEY = 'snout.checkout.v1';
+
+export const checkout = {
+  read() {
+    try {
+      const parsed = JSON.parse(sessionStorage.getItem(CHECKOUT_KEY));
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch (_) {
+      return {};
+    }
+  },
+
+  write(patch) {
+    try {
+      sessionStorage.setItem(CHECKOUT_KEY, JSON.stringify({ ...checkout.read(), ...patch }));
+    } catch (_) {
+      /* private mode: the choice simply does not survive the page */
+    }
+  },
+
+  clear() {
+    try {
+      sessionStorage.removeItem(CHECKOUT_KEY);
+    } catch (_) {
+      /* nothing to forget */
+    }
   },
 };
 
